@@ -7,9 +7,9 @@ public class TicTacToeGame {
 
 	private char[] board;
 	private static char userSelection;
-	@SuppressWarnings("unused")
 	private static char computerSelection;
-
+	private static Scanner input=new Scanner(System.in);
+	
 	private char[] board() {
 		board = new char[10];
 		Arrays.fill(board, ' ');
@@ -18,8 +18,7 @@ public class TicTacToeGame {
 
 	public static void choice() {
 		System.out.println("Enter X or O");
-		@SuppressWarnings("resource")
-		char charChoice = (new Scanner(System.in)).next().charAt(0);
+		char charChoice = input.next().charAt(0);
 		TicTacToeGame.userSelection = charChoice;
 		TicTacToeGame.computerSelection = (charChoice == 'X') ? 'O' : 'X';
 		switch (charChoice) {
@@ -49,17 +48,30 @@ public class TicTacToeGame {
 		System.out.println("\n");
 	}
 
-	public static boolean checkIfEmpty(char[] board, int choice) {
+	public static boolean isPlaceAvailable(char[] board, int choice) {
 		if (board[choice] == ' ')
 			return true;
 		return false;
 	}
 
+	public static boolean coinToss()
+	{
+		System.out.println("Enter heads or tails: (H/T)");
+		char sideChoice = input.next().charAt(0);
+		int toss=(int)(Math.random()*2);
+		if(toss==0 && sideChoice=='H'||toss==0 && sideChoice=='h')
+			return true;
+		else if(toss==1 && sideChoice=='T'||toss==1 && sideChoice=='t')
+			return true;
+		else 
+			return false;
+		
+	}
+	
 	public static void takeUserInput(char[] board) {
 		System.out.println("Enter choice: \n");
-		@SuppressWarnings("resource")
-		int choice = (new Scanner(System.in)).nextInt();
-		if (checkIfEmpty(board, choice))
+		int choice = input.nextInt();
+		if (isPlaceAvailable(board, choice))
 			board[choice] = TicTacToeGame.userSelection;
 		else
 			System.out.println("Place not available!");
@@ -69,8 +81,13 @@ public class TicTacToeGame {
 	public static void main(String args[]) {
 		TicTacToeGame newGame = new TicTacToeGame();
 		char[] board = newGame.board();
-		choice();
-		displayCurrentBoard(board);
-		takeUserInput(board);
+		if(coinToss())
+		{	
+			choice();
+			displayCurrentBoard(board);
+			takeUserInput(board);
+		}	
+		else	
+			System.out.println("Computer gets the first turn");
 	}
 }

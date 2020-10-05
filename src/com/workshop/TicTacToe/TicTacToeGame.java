@@ -16,13 +16,24 @@ public class TicTacToeGame {
 		return board;
 	}
 
-	public static char choice() {
+	public static void choice() {
 		System.out.println("Enter X or O");
 		@SuppressWarnings("resource")
 		char charChoice = (new Scanner(System.in)).next().charAt(0);
 		TicTacToeGame.userSelection = charChoice;
 		TicTacToeGame.computerSelection = (charChoice == 'X') ? 'O' : 'X';
-		return charChoice;
+		switch (charChoice) {
+		case 'X':
+			System.out.println("X is assigned to the player");
+			System.out.println("O is assigned to the computer");
+			break;
+		case 'O':
+			System.out.println("O is assigned to the player");
+			System.out.println("X is assigned to the computer");
+			break;
+		default:
+			System.out.println("Wrong Choice!");
+		}
 	}
 
 	public static void displayCurrentBoard(char board[]) {
@@ -58,19 +69,7 @@ public class TicTacToeGame {
 	public static void main(String args[]) {
 		TicTacToeGame newGame = new TicTacToeGame();
 		char[] board = newGame.board();
-		char selection = choice();
-		switch (selection) {
-		case 'X':
-			System.out.println("X is assigned to the player");
-			System.out.println("O is assigned to the computer");
-			break;
-		case 'O':
-			System.out.println("O is assigned to the player");
-			System.out.println("X is assigned to the computer");
-			break;
-		default:
-			System.out.println("Wrong Choice!");
-		}
+		choice();
 		displayCurrentBoard(board);
 		takeUserInput(board);
 	}
